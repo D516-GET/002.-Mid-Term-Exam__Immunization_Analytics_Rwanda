@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Immunization Analytics{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'adminlte/plugins/fontawesome-free/css/all.min.css' %}">
+  <link rel="stylesheet" href="{% static 'adminlte/dist/css/adminlte.min.css' %}">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Top navigation bar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url 'coverage:dashboard' %}" class="nav-link">Home</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+      {% if user.is_authenticated %}
+      <li class="nav-item">
+        <span class="nav-link"><i class="fas fa-user"></i> {{ user.username }}</span>
+      </li>
+      <li class="nav-item">
+        <form method="post" action="{% url 'logout' %}" class="form-inline">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-link nav-link">Log out</button>
+        </form>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a href="{% url 'login' %}" class="nav-link"><i class="fas fa-sign-in-alt"></i> Log in</a>
+      </li>
+      {% endif %}
+      <li class="nav-item">
+        <a href="/admin/" class="nav-link"><i class="fas fa-user-cog"></i> Admin</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="{% url 'coverage:dashboard' %}" class="brand-link">
+      <i class="fas fa-syringe brand-image" style="margin-left: 1rem;"></i>
+      <span class="brand-text font-weight-light">Immunization Analytics</span>
+    </a>
+    <div class="sidebar">
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu">
+
+          <li class="nav-item">
+            <a href="{% url 'coverage:dashboard' %}"
+               class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+
+          <li class="nav-header">HEALTH DATA</li>
+          <li class="nav-item">
+            <a href="{% url 'health_data:district_list' %}"
+               class="nav-link {% if 'district' in request.resolver_match.url_name %}active{% endif %}">
+              <i class="nav-icon fas fa-map-marked-alt"></i>
+              <p>Districts</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'health_data:facility_list' %}"
+               class="nav-link {% if 'facility' in request.resolver_match.url_name %}active{% endif %}">
+              <i class="nav-icon fas fa-hospital"></i>
+              <p>Facilities</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'health_data:child_list' %}"
+               class="nav-link {% if 'child' in request.resolver_match.url_name %}active{% endif %}">
+              <i class="nav-icon fas fa-child"></i>
+              <p>Children</p>
+            </a>
+          </li>
+
+          <li class="nav-header">COVERAGE</li>
+          <li class="nav-item">
+            <a href="{% url 'coverage:record_list' %}"
+               class="nav-link {% if 'record' in request.resolver_match.url_name %}active{% endif %}">
+              <i class="nav-icon fas fa-syringe"></i>
+              <p>Immunizations</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'coverage:visit_list' %}"
+               class="nav-link {% if 'visit' in request.resolver_match.url_name %}active{% endif %}">
+              <i class="nav-icon fas fa-baby"></i>
+              <p>Maternal visits</p>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- Page content -->
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <h1>{% block page_title %}{% endblock %}</h1>
+      </div>
+    </section>
+    <section class="content">
+      <div class="container-fluid">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+              {{ message }}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+          {% endfor %}
+        {% endif %}
+        {% block content %}{% endblock %}
+      </div>
+    </section>
+  </div>
+
+  <footer class="main-footer">
+    <strong>Group 15</strong> - Immunization and Maternal &amp; Child Health Analytics, Rwanda
+  </footer>
+</div>
+
+<script src="{% static 'adminlte/plugins/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'adminlte/dist/js/adminlte.min.js' %}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

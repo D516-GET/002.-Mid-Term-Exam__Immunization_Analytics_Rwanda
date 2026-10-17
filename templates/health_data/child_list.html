@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Children | Immunization Analytics{% endblock %}
+{% block page_title %}Children{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <form method="get" class="form-inline">
+      <input type="text" name="q" value="{{ query }}" class="form-control mr-2"
+             placeholder="Search name or district">
+      <button type="submit" class="btn btn-primary mr-2"><i class="fas fa-search"></i> Search</button>
+      <a href="{% url 'health_data:child_create' %}" class="btn btn-success ml-auto">
+        <i class="fas fa-plus"></i> Register child
+      </a>
+    </form>
+  </div>
+  <div class="card-body table-responsive p-0">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr><th>Name</th><th>Sex</th><th>Date of birth</th><th>District</th><th style="width: 120px">Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for child in page %}
+        <tr>
+          <td><a href="{% url 'health_data:child_detail' child.pk %}">{{ child.full_name }}</a></td>
+          <td>{{ child.get_sex_display }}</td>
+          <td>{{ child.date_of_birth }}</td>
+          <td>{{ child.district.name }}</td>
+          <td>
+            <a href="{% url 'health_data:child_update' child.pk %}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
+            <a href="{% url 'health_data:child_delete' child.pk %}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="5">No children found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer clearfix">
+    <span>Page {{ page.number }} of {{ page.paginator.num_pages }} ({{ page.paginator.count }} children)</span>
+    <ul class="pagination pagination-sm m-0 float-right">
+      {% if page.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ page.previous_page_number }}&q={{ query }}">Previous</a></li>
+      {% endif %}
+      {% if page.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ page.next_page_number }}&q={{ query }}">Next</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

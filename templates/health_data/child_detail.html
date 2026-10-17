@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ child.full_name }} | Immunization Analytics{% endblock %}
+{% block page_title %}{{ child.full_name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">Child details</h3></div>
+      <div class="card-body">
+        <p><strong>Sex:</strong> {{ child.get_sex_display }}</p>
+        <p><strong>Date of birth:</strong> {{ child.date_of_birth }}</p>
+        <p><strong>District:</strong> {{ child.district.name }} ({{ child.district.province }})</p>
+      </div>
+      <div class="card-footer">
+        <a href="{% url 'health_data:child_update' child.pk %}" class="btn btn-info"><i class="fas fa-edit"></i> Edit</a>
+        <a href="{% url 'health_data:child_delete' child.pk %}" class="btn btn-danger"><i class="fas fa-trash"></i> Delete</a>
+        <a href="{% url 'health_data:child_list' %}" class="btn btn-secondary">Back</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Immunization history</h3>
+        <a href="{% url 'coverage:record_create' %}?child={{ child.pk }}" class="btn btn-sm btn-success float-right">
+          <i class="fas fa-plus"></i> Add immunization
+        </a>
+      </div>
+      <div class="card-body table-responsive p-0">
+        <table class="table table-striped">
+          <thead>
+            <tr><th>Vaccine</th><th>Dose</th><th>Date given</th><th>Facility</th><th></th></tr>
+          </thead>
+          <tbody>
+            {% for record in records %}
+            <tr>
+              <td>{{ record.vaccine.name }}</td>
+              <td>{{ record.dose_number }}</td>
+              <td>{{ record.date_given }}</td>
+              <td>{{ record.facility.name }}</td>
+              <td>
+                <a href="{% url 'coverage:record_update' record.pk %}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i></a>
+                <a href="{% url 'coverage:record_delete' record.pk %}" class="btn btn-xs btn-danger"><i class="fas fa-trash"></i></a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No immunizations recorded yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

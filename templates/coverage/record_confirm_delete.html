@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete record | Immunization Analytics{% endblock %}
+{% block page_title %}Delete immunization record{% endblock %}
+
+{% block content %}
+<div class="card card-danger" style="max-width: 600px;">
+  <form method="post">
+    {% csrf_token %}
+    <div class="card-body">
+      <p>Delete the <strong>{{ record.vaccine.name }}</strong> (dose {{ record.dose_number }})
+         record given to <strong>{{ record.child.full_name }}</strong> on {{ record.date_given }}?</p>
+      <p class="text-danger">This cannot be undone.</p>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-danger">Yes, delete</button>
+      <a href="{% url 'health_data:child_detail' record.child_id %}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

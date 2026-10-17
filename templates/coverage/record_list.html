@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Immunizations | Immunization Analytics{% endblock %}
+{% block page_title %}Immunization records{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-header">
+    <form method="get" class="form-inline">
+      <input type="text" name="q" value="{{ query }}" class="form-control mr-2" placeholder="Search child name">
+      <select name="vaccine" class="form-control mr-2">
+        <option value="">All vaccines</option>
+        {% for v in vaccines %}
+        <option value="{{ v.pk }}" {% if vaccine_id == v.pk|stringformat:"s" %}selected{% endif %}>{{ v.name }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="btn btn-primary mr-2"><i class="fas fa-search"></i> Filter</button>
+      <a href="{% url 'coverage:record_create' %}" class="btn btn-success ml-auto">
+        <i class="fas fa-plus"></i> Record immunization
+      </a>
+    </form>
+  </div>
+  <div class="card-body table-responsive p-0">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr><th>Child</th><th>Vaccine</th><th>Dose</th><th>Date given</th><th>Facility</th><th style="width: 120px">Actions</th></tr>
+      </thead>
+      <tbody>
+        {% for record in page %}
+        <tr>
+          <td><a href="{% url 'health_data:child_detail' record.child_id %}">{{ record.child.full_name }}</a></td>
+          <td>{{ record.vaccine.name }}</td>
+          <td>{{ record.dose_number }}</td>
+          <td>{{ record.date_given }}</td>
+          <td>{{ record.facility.name }}</td>
+          <td>
+            <a href="{% url 'coverage:record_update' record.pk %}" class="btn btn-sm btn-info"><i class="fas fa-edit"></i></a>
+            <a href="{% url 'coverage:record_delete' record.pk %}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6">No records found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer clearfix">
+    <span>Page {{ page.number }} of {{ page.paginator.num_pages }} ({{ page.paginator.count }} records)</span>
+    <ul class="pagination pagination-sm m-0 float-right">
+      {% if page.has_previous %}
+      <li class="page-item"><a class="page-link" href="?page={{ page.previous_page_number }}&q={{ query }}&vaccine={{ vaccine_id }}">Previous</a></li>
+      {% endif %}
+      {% if page.has_next %}
+      <li class="page-item"><a class="page-link" href="?page={{ page.next_page_number }}&q={{ query }}&vaccine={{ vaccine_id }}">Next</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

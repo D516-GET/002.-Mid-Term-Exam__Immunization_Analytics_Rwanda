@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete {{ child.full_name }} | Immunization Analytics{% endblock %}
+{% block page_title %}Delete child{% endblock %}
+
+{% block content %}
+<div class="card card-danger" style="max-width: 600px;">
+  <form method="post">
+    {% csrf_token %}
+    <div class="card-body">
+      <p>Are you sure you want to delete <strong>{{ child.full_name }}</strong>
+         (born {{ child.date_of_birth }}, {{ child.district.name }})?</p>
+      <p class="text-danger">All of this child's immunization records will be deleted as well. This cannot be undone.</p>
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-danger">Yes, delete</button>
+      <a href="{% url 'health_data:child_detail' child.pk %}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

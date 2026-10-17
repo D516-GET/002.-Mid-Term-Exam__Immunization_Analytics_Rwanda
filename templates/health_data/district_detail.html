@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ district.name }} | Immunization Analytics{% endblock %}
+{% block page_title %}{{ district.name }} District{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-3 col-6">
+    <div class="small-box bg-info"><div class="inner"><h3>{{ district.population }}</h3><p>Population (2022 census)</p></div>
+      <div class="icon"><i class="fas fa-users"></i></div></div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="small-box bg-success"><div class="inner"><h3>{{ district.children_0_17 }}</h3><p>Children aged 0-17 (census)</p></div>
+      <div class="icon"><i class="fas fa-child"></i></div></div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="small-box bg-warning"><div class="inner"><h3>{{ child_total }}</h3><p>Children registered</p></div>
+      <div class="icon"><i class="fas fa-address-book"></i></div></div>
+  </div>
+  <div class="col-md-3 col-6">
+    <div class="small-box bg-danger"><div class="inner"><h3>{{ facility_total }}</h3><p>Health facilities</p></div>
+      <div class="icon"><i class="fas fa-hospital"></i></div></div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header"><h3 class="card-title">First-dose coverage by vaccine (children old enough for the vaccine)</h3></div>
+  <div class="card-body table-responsive p-0">
+    <table class="table table-striped">
+      <thead><tr><th>Vaccine</th><th>Eligible children</th><th>Vaccinated</th><th>Coverage</th></tr></thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td>{{ row.vaccine }}</td>
+          <td>{{ row.eligible }}</td>
+          <td>{{ row.vaccinated }}</td>
+          <td>
+            {% if row.rate is None %}
+              <span class="text-muted">n/a</span>
+            {% else %}
+              <span class="badge {% if row.below_target %}bg-danger{% else %}bg-success{% endif %}">{{ row.rate }}%</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="card-footer">
+    Red means below the {{ target }}% target.
+    <a href="{% url 'health_data:district_list' %}" class="btn btn-secondary btn-sm float-right">Back to districts</a>
+  </div>
+</div>
+{% endblock %}

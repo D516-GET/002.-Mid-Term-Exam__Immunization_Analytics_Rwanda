@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} | Immunization Analytics{% endblock %}
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="card card-primary" style="max-width: 600px;">
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <div class="card-body">
+      {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">{{ error }}</div>
+      {% endfor %}
+      {% for field in form %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% for error in field.errors %}
+          <div class="text-danger small">{{ error }}</div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a href="{% url 'coverage:record_list' %}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

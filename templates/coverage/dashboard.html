@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | Immunization Analytics{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-3 col-6">
+    <div class="small-box bg-info">
+      <div class="inner"><h3>{{ total_children }}</h3><p>Children registered</p></div>
+      <div class="icon"><i class="fas fa-child"></i></div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-6">
+    <div class="small-box bg-success">
+      <div class="inner"><h3>{{ overall_rate }}<sup style="font-size: 20px">%</sup></h3><p>BCG coverage (simulated)</p></div>
+      <div class="icon"><i class="fas fa-syringe"></i></div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-6">
+    <div class="small-box bg-warning">
+      <div class="inner"><h3>{{ below_target }}</h3><p>Districts below {{ target }}%</p></div>
+      <div class="icon"><i class="fas fa-exclamation-triangle"></i></div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-6">
+    <div class="small-box bg-danger">
+      <div class="inner"><h3>{{ total_visits }}</h3><p>Antenatal visits recorded</p></div>
+      <div class="icon"><i class="fas fa-baby"></i></div>
+    </div>
+  </div>
+</div>
+
+{% if national_bcg %}
+<div class="callout callout-info">
+  <h5>National benchmark</h5>
+  <p>WHO-UNICEF estimate of BCG coverage in Rwanda for {{ national_bcg.year }}: <strong>{{ national_bcg.coverage_percent }}%</strong>.
+     Facilities in the system: {{ total_facilities }}. Immunization records: {{ total_records }}.</p>
+</div>
+{% endif %}
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">BCG coverage by district (lowest first)</h3></div>
+      <div class="card-body table-responsive p-0" style="max-height: 480px;">
+        <table class="table table-striped table-head-fixed">
+          <thead>
+            <tr><th>District</th><th>Province</th><th>Children</th><th>Coverage</th></tr>
+          </thead>
+          <tbody>
+            {% for row in district_rows %}
+            <tr>
+              <td>{{ row.name }}</td>
+              <td>{{ row.province }}</td>
+              <td>{{ row.children }}</td>
+              <td>
+                <span class="badge {% if row.below_target %}bg-danger{% else %}bg-success{% endif %}">{{ row.rate }}%</span>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="card">
+      <div class="card-header"><h3 class="card-title">Latest immunization records</h3></div>
+      <div class="card-body table-responsive p-0">
+        <table class="table table-striped">
+          <thead>
+            <tr><th>Child</th><th>Vaccine</th><th>Dose</th><th>Date</th></tr>
+          </thead>
+          <tbody>
+            {% for record in recent_records %}
+            <tr>
+              <td>{{ record.child.full_name }}</td>
+              <td>{{ record.vaccine.name }}</td>
+              <td>{{ record.dose_number }}</td>
+              <td>{{ record.date_given }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">No records yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

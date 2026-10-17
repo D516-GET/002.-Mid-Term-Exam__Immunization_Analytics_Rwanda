@@ -1,0 +1,72 @@
+﻿vaccine,indicator,year,coverage_percent
+BCG,BCG,2014,99
+BCG,BCG,2015,99
+BCG,BCG,2016,99
+BCG,BCG,2017,98
+BCG,BCG,2018,97
+BCG,BCG,2019,98
+BCG,BCG,2020,89
+BCG,BCG,2021,89
+BCG,BCG,2022,99
+BCG,BCG,2023,92
+BCG,BCG,2024,99
+BCG,BCG,2025,98
+Pentavalent (DTP-HepB-Hib),DTP3,2014,98
+Pentavalent (DTP-HepB-Hib),DTP3,2015,98
+Pentavalent (DTP-HepB-Hib),DTP3,2016,98
+Pentavalent (DTP-HepB-Hib),DTP3,2017,98
+Pentavalent (DTP-HepB-Hib),DTP3,2018,97
+Pentavalent (DTP-HepB-Hib),DTP3,2019,98
+Pentavalent (DTP-HepB-Hib),DTP3,2020,91
+Pentavalent (DTP-HepB-Hib),DTP3,2021,88
+Pentavalent (DTP-HepB-Hib),DTP3,2022,98
+Pentavalent (DTP-HepB-Hib),DTP3,2023,94
+Pentavalent (DTP-HepB-Hib),DTP3,2024,98
+Pentavalent (DTP-HepB-Hib),DTP3,2025,95
+PCV13 (Pneumococcal),PCVC,2014,98
+PCV13 (Pneumococcal),PCVC,2015,98
+PCV13 (Pneumococcal),PCVC,2016,98
+PCV13 (Pneumococcal),PCVC,2017,98
+PCV13 (Pneumococcal),PCVC,2018,97
+PCV13 (Pneumococcal),PCVC,2019,98
+PCV13 (Pneumococcal),PCVC,2020,91
+PCV13 (Pneumococcal),PCVC,2021,88
+PCV13 (Pneumococcal),PCVC,2022,97
+PCV13 (Pneumococcal),PCVC,2023,94
+PCV13 (Pneumococcal),PCVC,2024,98
+PCV13 (Pneumococcal),PCVC,2025,96
+Rotavirus,ROTAC,2014,98
+Rotavirus,ROTAC,2015,98
+Rotavirus,ROTAC,2016,98
+Rotavirus,ROTAC,2017,98
+Rotavirus,ROTAC,2018,98
+Rotavirus,ROTAC,2019,98
+Rotavirus,ROTAC,2020,91
+Rotavirus,ROTAC,2021,89
+Rotavirus,ROTAC,2022,98
+Rotavirus,ROTAC,2023,94
+Rotavirus,ROTAC,2024,98
+Rotavirus,ROTAC,2025,98
+Measles-Rubella (MR),MCV1,2014,97
+Measles-Rubella (MR),MCV1,2015,96
+Measles-Rubella (MR),MCV1,2016,95
+Measles-Rubella (MR),MCV1,2017,97
+Measles-Rubella (MR),MCV1,2018,99
+Measles-Rubella (MR),MCV1,2019,96
+Measles-Rubella (MR),MCV1,2020,94
+Measles-Rubella (MR),MCV1,2021,87
+Measles-Rubella (MR),MCV1,2022,99
+Measles-Rubella (MR),MCV1,2023,96
+Measles-Rubella (MR),MCV1,2024,97
+Measles-Rubella (MR),MCV1,2025,93
+Measles-Rubella (MR),MCV2,2015,87
+Measles-Rubella (MR),MCV2,2016,90
+Measles-Rubella (MR),MCV2,2017,95
+Measles-Rubella (MR),MCV2,2018,96
+Measles-Rubella (MR),MCV2,2019,92
+Measles-Rubella (MR),MCV2,2020,91
+Measles-Rubella (MR),MCV2,2021,85
+Measles-Rubella (MR),MCV2,2022,91
+Measles-Rubella (MR),MCV2,2023,88
+Measles-Rubella (MR),MCV2,2024,93
+Measles-Rubella (MR),MCV2,2025,90
